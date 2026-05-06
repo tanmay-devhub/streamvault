@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: streamvault-api
+    runtime: node
+    region: ohio          # closest to us-east-2 (your S3 region)
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000        # Render assigns this automatically too
+      - key: CLIENT_URL
+        sync: false         # Set this in Render dashboard = your Vercel URL
+      - key: CLERK_SECRET_KEY
+        sync: false         # Set in Render dashboard — never commit real keys
+      - key: CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_REGION
+        value: us-east-2
+      - key: AWS_S3_BUCKET
+        sync: false
+      - key: S3_ACL
+        value: public-read
+      - key: MAX_FILE_SIZE_MB
+        value: "2048"
+      - key: LOG_LEVEL
+        value: info
+      - key: RUN_WORKER
+        value: "true"
